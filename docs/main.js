@@ -1,4 +1,4 @@
-import twitter from 'twitter-text';
+import * as twitter from 'twitter-text';
 import PDFJSAnnotate from '../';
 import initColorPicker from './shared/initColorPicker';
 
