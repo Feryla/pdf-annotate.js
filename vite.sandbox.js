@@ -1,5 +1,4 @@
 import { defineConfig } from 'vite';
-import legacy from '@vitejs/plugin-legacy';
 import { resolve } from 'path';
 import fs from 'fs';
 
@@ -25,7 +24,7 @@ function buildEntries() {
 export default defineConfig({
   root: 'sandbox',
   server: {
-    port: 3000
+    port: 5174 // Use a different port than the docs server
   },
   build: {
     outDir: '__build__',
@@ -33,9 +32,5 @@ export default defineConfig({
       input: buildEntries()
     }
   },
-  plugins: [
-    legacy({
-      targets: ['defaults', 'not IE 11']
-    })
-  ]
+  plugins: []
 });

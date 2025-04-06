@@ -1,11 +1,10 @@
 import { defineConfig } from 'vite';
-import legacy from '@vitejs/plugin-legacy';
 import { resolve } from 'path';
 
 export default defineConfig({
   root: 'docs',
   server: {
-    port: 3001
+    port: 5173 // Default Vite port
   },
   build: {
     outDir: './',
@@ -16,9 +15,5 @@ export default defineConfig({
       }
     }
   },
-  plugins: [
-    legacy({
-      targets: ['defaults', 'not IE 11']
-    })
-  ]
+  plugins: []
 });

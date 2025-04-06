@@ -54,9 +54,13 @@ $ cd pdf-annotate.js
 # install dependencies
 $ npm install
 
-# start example server
+# start example server (docs)
 $ npm start
 $ open http://127.0.0.1:5173
+
+# start sandbox examples
+$ npm run dev:sandbox
+$ open http://127.0.0.1:5174
 
 # run tests
 $ npm test
