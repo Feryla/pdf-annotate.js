@@ -6,6 +6,14 @@ DefaultTextLayerFactory.prototype.createTextLayerBuilder = function () {
   };
 }
 
+// Mock the imported renderTextLayer function
+export const renderTextLayer = ({ textContent, container }) => {
+  return {
+    promise: Promise.resolve(),
+    cancel: () => {}
+  };
+};
+
 export default function mockPDFJS() {
   return {
     DefaultTextLayerFactory
