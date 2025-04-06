@@ -2,13 +2,15 @@
   "name": "pdf-annotate.js",
   "version": "0.1.0",
   "description": "Annotation layer for pdf.js",
+  "type": "module",
   "main": "dist/pdf-annotate.js",
   "scripts": {
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "dev": "node scripts/cp-shared.js && vite --config vite.web.js",
-    "dev:sandbox": "node scripts/cp-shared.js && vite --config vite.sandbox.js",
+    "copy-shared": "node scripts/cp-shared.js",
+    "dev": "npm run copy-shared && vite --config vite.web.js",
+    "dev:sandbox": "npm run copy-shared && vite --config vite.sandbox.js",
     "build": "vite build && MINIFY=1 vite build",
     "preview": "vite preview"
   },
@@ -17,7 +19,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/instructure/pdf-annotate.js.git"
+    "url": "git+https://github.com/Feryla/pdf-annotate.js.git"
   },
   "keywords": [
     "pdf",
@@ -26,9 +28,9 @@
   "author": "Feryla",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/instructure/pdf-annotate.js/issues"
+    "url": "https://github.com/Feryla/pdf-annotate.js/issues"
   },
-  "homepage": "https://github.com/instructure/pdf-annotate.js#readme",
+  "homepage": "https://github.com/Feryla/pdf-annotate.js#readme",
   "devDependencies": {
     "@vitest/coverage-v8": "^3.1.1",
     "canvas": "^3.1.0",
