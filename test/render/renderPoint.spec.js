@@ -1,17 +1,19 @@
 import renderPoint from '../../src/render/renderPoint';
 import { equal } from 'assert';
+import { describe, beforeEach, afterEach, it, expect } from 'vitest';
 
-describe('render::renderPoint', function () {
-  it('should render a point', function () {
+
+describe('render::renderPoint', () => {
+  it('should render a point', () => {
     let point = renderPoint({
       x: 100,
       y: 200
     });
 
-    equal(point.nodeName, 'svg');
-    equal(point.getAttribute('x'), 100);
-    equal(point.getAttribute('y'), 200);
-    equal(point.getAttribute('width'), 25);
-    equal(point.getAttribute('height'), 25);
+    expect(point.nodeName).toBe('svg');
+    expect(parseInt(point.getAttribute('x'), 10)).toBe(100);
+    expect(parseInt(point.getAttribute('y'), 10)).toBe(200);
+    expect(parseInt(point.getAttribute('width'), 10)).toBe(25);
+    expect(parseInt(point.getAttribute('height'), 10)).toBe(25);
   });
 });

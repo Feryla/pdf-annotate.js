@@ -1,23 +1,25 @@
 import renderLine from '../../src/render/renderLine';
 import { equal } from 'assert';
+import { describe, beforeEach, afterEach, it, expect } from 'vitest';
+
 
 function assertG(g, l) {
-  equal(g.nodeName, 'g');
-  equal(g.children.length, l);
-  equal(g.getAttribute('stroke'), '#f00');
-  equal(g.getAttribute('stroke-width'), '1');
+  expect(g.nodeName).toBe('g');
+  expect(g.children.length).toBe(l);
+  expect(g.getAttribute('stroke')).toBe('#f00');
+  expect(g.getAttribute('stroke-width')).toBe('1');
 }
 
 function assertLine(line, x, y, w) {
-  equal(line.nodeName, 'line');
-  equal(line.getAttribute('x1'), x);
-  equal(line.getAttribute('y1'), y);
-  equal(line.getAttribute('x2'), x + w);
-  equal(line.getAttribute('y2'), y);
+  expect(line.nodeName).toBe('line');
+  expect(parseInt(line.getAttribute('x1'), 10)).toBe(x);
+  expect(parseInt(line.getAttribute('y1'), 10)).toBe(y);
+  expect(parseInt(line.getAttribute('x2'), 10)).toBe(x + w);
+  expect(parseInt(line.getAttribute('y2'), 10)).toBe(y);
 }
 
-describe('render::renderLine', function () {
-  it('should render a line', function () {
+describe('render::renderLine', () => {
+  it('should render a line', () => {
     let line = renderLine({
       rectangles: [
         {
@@ -32,7 +34,7 @@ describe('render::renderLine', function () {
     assertLine(line.children[0], 25, 50, 100);
   });
 
-  it('should render multiple lines', function () {
+  it('should render multiple lines', () => {
     let line = renderLine({
       rectangles: [
         {

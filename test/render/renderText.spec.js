@@ -1,8 +1,10 @@
 import renderText from '../../src/render/renderText';
 import { equal } from 'assert';
+import { describe, beforeEach, afterEach, it, expect } from 'vitest';
 
-describe('render::renderText', function () {
-  it('should render text', function () {
+
+describe('render::renderText', () => {
+  it('should render text', () => {
     const x = 50;
     const y = 100;
     const size = 20;
@@ -14,10 +16,10 @@ describe('render::renderText', function () {
       color
     });
 
-    equal(text.nodeName, 'text');
-    equal(text.getAttribute('x'), x);
-    equal(text.getAttribute('y'), y + size);
-    equal(text.getAttribute('fill'), `#${color}`);
-    equal(text.getAttribute('font-size'), size);
+    expect(text.nodeName).toBe('text');
+    expect(parseInt(text.getAttribute('x'), 10)).toBe(x);
+    expect(parseInt(text.getAttribute('y'), 10)).toBe(y + size);
+    expect(text.getAttribute('fill')).toBe(`#${color}`);
+    expect(parseInt(text.getAttribute('font-size'), 10)).toBe(size);
   });
 });
