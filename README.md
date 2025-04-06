@@ -1,7 +1,7 @@
-# pdf-annotate.js (no longer maintained)
+# pdf-annotate.js
 
-[![build status](https://img.shields.io/travis/instructure/pdf-annotate.js.svg?style=flat-square)](https://travis-ci.org/instructure/pdf-annotate.js)
-[![code coverage](https://img.shields.io/coveralls/instructure/pdf-annotate.js.svg?style=flat-square)](https://coveralls.io/r/instructure/pdf-annotate.js)
+[![build status](https://github.com/Feryla/pdf-annotate.js/actions/workflows/build.yml/badge.svg)](https://github.com/Feryla/pdf-annotate.js/actions)
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Feryla/pdf-annotate.js/blob/master/LICENSE)
 
 Annotation layer for [pdf.js](https://github.com/mozilla/pdf.js)
 
@@ -38,28 +38,34 @@ PDFJS.getDocument(RENDER_OPTIONS.documentId).then((pdf) => {
 });
 ```
 
-See more [examples](https://github.com/instructure/pdf-annotate.js/blob/master/web/index.js).
+See more [examples](https://github.com/Feryla/pdf-annotate.js/blob/master/docs/index.js).
 
 ## Documentation
 
-[View the docs](https://github.com/instructure/pdf-annotate.js/tree/master/docs).
+[View the docs](https://github.com/Feryla/pdf-annotate.js/tree/master/docs).
 
 ## Developing
 
 ```bash
 # clone the repo
-$ git clone https://github.com/instructure/pdf-annotate.js.git
+$ git clone https://github.com/Feryla/pdf-annotate.js.git
 $ cd pdf-annotate.js
 
-# intall dependencies
+# install dependencies
 $ npm install
 
 # start example server
 $ npm start
-$ open http://127.0.0.1:8080
+$ open http://127.0.0.1:5173
 
 # run tests
 $ npm test
+
+# run tests in watch mode
+$ npm run test:watch
+
+# build library
+$ npm run build
 ```
 ## License
 
