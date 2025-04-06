@@ -1,10 +1,10 @@
+import { describe, beforeEach, afterEach, it, expect } from 'vitest';
 import PDFJSAnnotate from '../src/PDFJSAnnotate';
-import { equal } from 'assert';
 
 let __storeAdapter;
 
-describe('PDFJSAnnotate', function () {
-  beforeEach(function () {
+describe('PDFJSAnnotate', () => {
+  beforeEach(() => {
     __storeAdapter = PDFJSAnnotate.__storeAdapter;
     PDFJSAnnotate.setStoreAdapter(new PDFJSAnnotate.StoreAdapter({
       getAnnotations: (documentId, pageNumber) => {
@@ -23,33 +23,25 @@ describe('PDFJSAnnotate', function () {
     }));
   });
 
-  afterEach(function () {
+  afterEach(() => {
     PDFJSAnnotate.setStoreAdapter(__storeAdapter);
   });
 
-  it('should get annotations', function (done) {
-    PDFJSAnnotate.getAnnotations().then((annotations) => {
-      equal(annotations.annotations[0].type, 'point');
-      done();
-    });
+  it('should get annotations', async () => {
+    const annotations = await PDFJSAnnotate.getAnnotations();
+    expect(annotations.annotations[0].type).toBe('point');
   });
 
-  // it('should throw error if StoreAdapter is not valid', function () {
-  //   let error;
-  //   try {
+  // it('should throw error if StoreAdapter is not valid', () => {
+  //   expect(() => {
   //     PDFJSAnnotate.setStoreAdapter({});
-  //   } catch (e) {
-  //     error = e;
-  //   }
-  //   equal(error instanceof Error, true);
+  //   }).toThrow();
   // });
  
-  it('should inject documentId and pageNumber', function (done) {
-    PDFJSAnnotate.getAnnotations('document-id', 'page-number').then((annotations) => {
-      equal(annotations.documentId, 'document-id');
-      equal(annotations.pageNumber, 'page-number');
-      done();
-    });
+  it('should inject documentId and pageNumber', async () => {
+    const annotations = await PDFJSAnnotate.getAnnotations('document-id', 'page-number');
+    expect(annotations.documentId).toBe('document-id');
+    expect(annotations.pageNumber).toBe('page-number');
   });
 });
 
