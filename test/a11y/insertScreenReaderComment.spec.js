@@ -1,34 +1,36 @@
 import insertScreenReaderComment from '../../src/a11y/insertScreenReaderComment';
 import { equal } from 'assert';
+import { describe, beforeEach, afterEach, it, expect } from 'vitest';
+
 
 let hint;
 
-describe('a11y::insertScreenReaderComment', function () {
-  beforeEach(function () {
+describe('a11y::insertScreenReaderComment', () => {
+  beforeEach(() => {
     hint = document.createElement('div');
     hint.setAttribute('id', 'pdf-annotate-screenreader-12345');
     hint.innerHTML = '<ol></ol>';
     document.body.appendChild(hint);
   });
 
-  afterEach(function () {
+  afterEach(() => {
     if (hint && hint.parentNode) {
       hint.parentNode.removeChild(hint);
     }
   });
 
-  it('should render a comment', function () {
+  it('should render a comment', () => {
     insertScreenReaderComment({
       annotation: 12345,
       content: 'Hello there!'
     });
 
     let list = hint.querySelector('ol');
-    equal(list.children.length, 1);
-    equal(list.children[0].innerHTML, 'Hello there!');
+    expect(list.children.length).toBe(1);
+    expect(list.children[0].innerHTML).toBe('Hello there!');
   });
 
-  it('should fail gracefully if no comment provided', function () {
+  it('should fail gracefully if no comment provided', () => {
     let error;
     try {
       insertScreenReaderComment();
@@ -36,10 +38,10 @@ describe('a11y::insertScreenReaderComment', function () {
       error = e;
     }
 
-    equal(typeof error, 'undefined');
+    expect(typeof error).toBe('undefined');
   });
   
-  it('should fail gracefully if bad annotation provided', function () {
+  it('should fail gracefully if bad annotation provided', () => {
     let error;
     try {
       insertScreenReaderComment({
@@ -49,7 +51,7 @@ describe('a11y::insertScreenReaderComment', function () {
       error = e;
     }
 
-    equal(typeof error, 'undefined');
+    expect(typeof error).toBe('undefined');
   });
 
 });
