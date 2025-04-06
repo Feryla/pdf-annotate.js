@@ -1,15 +1,15 @@
-import createStyleSheet from 'create-stylesheet';
-
 export const BORDER_COLOR = '#00BFFF';
 
-const userSelectStyleSheet = createStyleSheet({
-  body: {
-    '-webkit-user-select': 'none',
-       '-moz-user-select': 'none',
-        '-ms-user-select': 'none',
-            'user-select': 'none'
+// Create a stylesheet for user selection control
+const userSelectStyleSheet = document.createElement('style');
+userSelectStyleSheet.textContent = `
+  body {
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
   }
-});
+`;
 userSelectStyleSheet.setAttribute('data-pdf-annotate-user-select', 'true');
 
 /**
