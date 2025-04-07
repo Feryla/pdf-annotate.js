@@ -1,27 +1,29 @@
 import renderPath from '../../src/render/renderPath';
 import { equal } from 'assert';
+import { describe, beforeEach, afterEach, it, expect } from 'vitest';
 
-describe('render::renderPath', function () {
-  it('should render a path', function () {
+
+describe('render::renderPath', () => {
+  it('should render a path', () => {
     let path = renderPath({
       lines: [[0, 5], [10, 15], [20, 35]]
     });
 
-    equal(path.nodeName, 'path');
-    equal(path.getAttribute('d'), 'M0 5 10 15 M10 15 20 35Z');
-    equal(path.getAttribute('stroke'), '#000');
-    equal(path.getAttribute('stroke-width'), 1);
-    equal(path.getAttribute('fill'), 'none');
+    expect(path.nodeName).toBe('path');
+    expect(path.getAttribute('d')).toBe('M0 5 10 15 M10 15 20 35Z');
+    expect(path.getAttribute('stroke')).toBe('#000');
+    expect(parseInt(path.getAttribute('stroke-width'), 10)).toBe(1);
+    expect(path.getAttribute('fill')).toBe('none');
   });
 
-  it('shohuld render with custom options', function () {
+  it('shohuld render with custom options', () => {
     let path = renderPath({
       color: 'f00',
       width: 5,
       lines: [[0, 1], [1, 2], [2, 3]]
     });
 
-    equal(path.getAttribute('stroke'), '#f00');
-    equal(path.getAttribute('stroke-width'), 5);
+    expect(path.getAttribute('stroke')).toBe('#f00');
+    expect(parseInt(path.getAttribute('stroke-width'), 10)).toBe(5);
   });
 });

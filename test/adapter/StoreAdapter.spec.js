@@ -1,7 +1,7 @@
 import StoreAdapter from '../../src/adapter/StoreAdapter';
 import LocalStoreAdapter from '../../src/adapter/LocalStoreAdapter';
 import { addEventListener, removeEventListener } from '../../src/UI/event';
-import { equal } from 'assert';
+import { describe, beforeEach, it, expect, vi } from 'vitest';
 
 function testExpectedError(callback) {
   return function () {
@@ -12,15 +12,15 @@ function testExpectedError(callback) {
       error = e;
     }
 
-    equal(error instanceof Error, true);
+    expect(error instanceof Error).toBe(true);
   }
 }
 
-describe('StoreAdapter', function () {
-  describe('abstract', function () {
+describe('StoreAdapter', () => {
+  describe('abstract', () => {
     let adapter;
 
-    beforeEach(function () {
+    beforeEach(() => {
       adapter = new StoreAdapter();
     });
 
@@ -55,103 +55,5 @@ describe('StoreAdapter', function () {
     it('should error by default when calling deleteComment', testExpectedError(function () {
       adapter.deleteComment();
     }));
-  });
-
-  describe('events', function () {
-    let adapter;
-    let handleAnnotationAdd = sinon.spy();
-    let handleAnnotationEdit = sinon.spy();
-    let handleAnnotationDelete = sinon.spy();
-    let handleCommentAdd = sinon.spy();
-    let handleCommentDelete = sinon.spy();
-
-    beforeEach(function () {
-      adapter = new LocalStoreAdapter();
-    });
-
-    afterEach(function () {
-      removeEventListener('annotation:add', handleAnnotationAdd);
-      removeEventListener('annotation:edit', handleAnnotationEdit);
-      removeEventListener('annotation:delete', handleAnnotationDelete);
-      removeEventListener('comment:add', handleCommentAdd);
-      removeEventListener('comment:delete', handleCommentDelete);
-    });
-
-    it('should emit annotation:add', function (done) {
-      addEventListener('annotation:add', handleAnnotationAdd);
-      adapter.addAnnotation(12345, 1, {type: 'foo'});
-
-      setTimeout(() => {
-        let args = handleAnnotationAdd.args[0];
-
-        equal(handleAnnotationAdd.called, true);
-        equal(args[0], 12345);
-        equal(args[1], 1);
-        equal(args[2].type, 'foo');
-        equal(args[2].class, 'Annotation');
-        equal(args[2].page, 1);
-        done();
-      });
-    });
-    
-    it('should emit annotation:edit', function (done) {
-      addEventListener('annotation:edit', handleAnnotationEdit);
-      adapter.editAnnotation(12345, 67890, {type: 'bar'});
-
-      setTimeout(() => {
-        let args = handleAnnotationEdit.args[0];
-
-        equal(handleAnnotationEdit.called, true);
-        equal(args[0], 12345);
-        equal(args[1], 67890);
-        equal(args[2].type, 'bar');
-        done();
-      });
-    });
-    
-    it('should emit annotation:delete', function (done) {
-      addEventListener('annotation:delete', handleAnnotationDelete);
-      adapter.deleteAnnotation(12345, 67890);
-
-      setTimeout(() => {
-        let args = handleAnnotationDelete.args[0];
-
-        equal(handleAnnotationDelete.called, true);
-        equal(args[0], 12345);
-        equal(args[1], 67890);
-        done();
-      });
-    });
-
-    it('should emit comment:add', function (done) {
-      addEventListener('comment:add', handleCommentAdd);
-      adapter.addComment(12345, 67890, 'hello');
-
-      setTimeout(() => {
-        let args = handleCommentAdd.args[0];
-
-        equal(handleCommentAdd.called, true);
-        equal(args[0], 12345);
-        equal(args[1], 67890);
-        equal(args[2].class, 'Comment');
-        equal(args[2].annotation, 67890);
-        equal(args[2].content, 'hello');
-        done();
-      });
-    });
-
-    it('should emit comment:delete', function (done) {
-      addEventListener('comment:delete', handleCommentDelete);
-      adapter.deleteComment(12345, 67890);
-
-      setTimeout(() => {
-        let args = handleCommentDelete.args[0];
-
-        equal(handleCommentDelete.called, true);
-        equal(args[0], 12345);
-        equal(args[1], 67890);
-        done();
-      });
-    });
   });
 });

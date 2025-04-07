@@ -75,21 +75,36 @@ export function renderPage(pageNumber, renderOptions) {
         return new Promise((resolve, reject) => {
           // Render text layer for a11y of text content
           let textLayer = page.querySelector(`.textLayer`);
-          let textLayerFactory = new PDFJS.DefaultTextLayerFactory();
-          let textLayerBuilder = textLayerFactory.createTextLayerBuilder(textLayer, pageNumber -1, viewport);
-          textLayerBuilder.setTextContent(textContent);
-          textLayerBuilder.render();
-
-          // Enable a11y for annotations
-          // Timeout is needed to wait for `textLayerBuilder.render`
-          setTimeout(() => {
-            try {
-              renderScreenReaderHints(annotations.annotations);
-              resolve();
-            } catch (e) {
-              reject(e);
-            }
-          });
+          
+          // Modern PDF.js text layer rendering
+          const textLayerBuilder = {
+            textLayerDiv: textLayer,
+            renderingDone: false,
+            viewport: viewport,
+            textDivs: [],
+            textContentItemsStr: [],
+            textContentStream: textContent
+          };
+          
+          // Create text layer with the new API
+          import('pdfjs-dist').then(({ renderTextLayer }) => {
+            const task = renderTextLayer({
+              textContent: textContent,
+              container: textLayer,
+              viewport: viewport,
+              enhanceTextSelection: true
+            });
+            
+            task.promise.then(() => {
+              // Enable a11y for annotations after text layer is rendered
+              try {
+                renderScreenReaderHints(annotations.annotations);
+                resolve();
+              } catch (e) {
+                reject(e);
+              }
+            }).catch(reject);
+          }).catch(reject);
         });
       });
     }).then(() => {

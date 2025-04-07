@@ -1,8 +1,10 @@
 import abstractFunction from '../../src/utils/abstractFunction';
 import { equal } from 'assert';
+import { describe, beforeEach, afterEach, it, expect } from 'vitest';
 
-describe('utils::abstractFunction', function () {
-  it('should throw when not implemented', function () {
+
+describe('utils::abstractFunction', () => {
+  it('should throw when not implemented', () => {
     let err;
 
     try {
@@ -11,7 +13,7 @@ describe('utils::abstractFunction', function () {
       err = e;
     }
 
-    equal(typeof err, 'object');
-    equal(err.message, 'fn is not implemented');
+    expect(typeof err).toBe('object');
+    expect(err.message).toBe('fn is not implemented');
   });
 });

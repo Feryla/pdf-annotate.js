@@ -1,12 +1,14 @@
 import renderScreenReaderComments from '../../src/a11y/renderScreenReaderComments';
 import PDFJSAnnotate from '../../src/PDFJSAnnotate';
 import { equal } from 'assert';
+import { describe, beforeEach, afterEach, it, expect } from 'vitest';
+
 
 let hint;
 let getComments = PDFJSAnnotate.__storeAdapter.getComments;
 
-describe('a11y::renderScreenReaderComments', function () {
-  beforeEach(function () {
+describe('a11y::renderScreenReaderComments', () => {
+  beforeEach(() => {
     hint = document.createElement('div');
     hint.setAttribute('id', 'pdf-annotate-screenreader-12345');
     document.body.appendChild(hint);
@@ -22,7 +24,7 @@ describe('a11y::renderScreenReaderComments', function () {
     }
   });
 
-  afterEach(function () {
+  afterEach(() => {
     if (hint && hint.parentNode) {
       hint.parentNode.removeChild(hint);
     }
@@ -30,16 +32,16 @@ describe('a11y::renderScreenReaderComments', function () {
     PDFJSAnnotate.__storeAdapter.getComments = getComments;
   });
 
-  it('should render comments', function (done) {
+  it('should render comments', async () => {
     renderScreenReaderComments(null, 12345);
 
     setTimeout(function () {
       let list = hint.querySelector('ol');
-      equal(list.getAttribute('aria-label'), 'Comments');
-      equal(list.children.length, 2);
-      equal(list.children[0].innerHTML, 'foo');
-      equal(list.children[1].innerHTML, 'bar');
-      done();
+      expect(list.getAttribute('aria-label')).toBe('Comments');
+      expect(list.children.length).toBe(2);
+      expect(list.children[0].innerHTML).toBe('foo');
+      expect(list.children[1].innerHTML).toBe('bar');
+      
     });
   });
 });

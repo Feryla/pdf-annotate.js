@@ -1,14 +1,23 @@
 import PDFJSAnnotate from '../../src/PDFJSAnnotate';
 import { createPage, renderPage } from '../../src/UI/page';
 import mockPDFDocument from '../mockPDFDocument';
-import mockPDFJS from '../mockPDFJS';
+import mockPDFJS, { renderTextLayer } from '../mockPDFJS';
 import { equal } from 'assert';
+import { describe, beforeEach, afterEach, it, expect, vi } from 'vitest';
+
+// Mock the dynamic import of pdfjs-dist to use our mock
+vi.mock('pdfjs-dist', () => {
+  return {
+    renderTextLayer
+  };
+});
+
 
 let page;
 let _PDFJS = window.PDFJS;
 let getAnnotations = PDFJSAnnotate.getAnnotations;
 
-describe('UI::page', function () {
+describe('UI::page', () => {
   before(function () {
     _PDFJS = window.PDFJS;
     window.PDFJS = mockPDFJS();
@@ -28,38 +37,38 @@ describe('UI::page', function () {
     PDFJSAnnotate.getAnnotations = getAnnotations;
   });
 
-  beforeEach(function () {
+  beforeEach(() => {
     page = createPage(1);
   });
 
-  afterEach(function () {
+  afterEach(() => {
     if (page.parentNode) {
       page.parentNode.removeChild(page);
     }
   });
 
-  it('should create a page', function () {
+  it('should create a page', () => {
     let canvas = page.querySelector('canvas');
     let svg = page.querySelector('svg');
     let wrapper = page.querySelector('.canvasWrapper');
     let container = page.querySelector('.textLayer');
 
-    equal(page.nodeName, 'DIV');
-    equal(page.className, 'page');
-    equal(page.getAttribute('id'), 'pageContainer1');
-    equal(page.getAttribute('data-page-number'), '1');
-    equal(page.getAttribute('data-loaded'), 'false');
-    equal(page.style.visibility, 'hidden');
+    expect(page.nodeName).toBe('DIV');
+    expect(page.className).toBe('page');
+    expect(page.getAttribute('id')).toBe('pageContainer1');
+    expect(page.getAttribute('data-page-number')).toBe('1');
+    expect(page.getAttribute('data-loaded')).toBe('false');
+    expect(page.style.visibility).toBe('hidden');
 
-    equal(canvas.getAttribute('id'), 'page1');
-    equal(canvas.parentNode, wrapper);
+    expect(canvas.getAttribute('id')).toBe('page1');
+    expect(canvas.parentNode).toBe(wrapper);
 
-    equal(wrapper.className, 'canvasWrapper');
-    equal(svg.getAttribute('class'), 'annotationLayer');
-    equal(container.className, 'textLayer');
+    expect(wrapper.className).toBe('canvasWrapper');
+    expect(svg.getAttribute('class')).toBe('annotationLayer');
+    expect(container.className).toBe('textLayer');
   });
 
-  it('should render a page', function (done) {
+  it('should render a page', async () => {
     document.body.appendChild(page);
 
     renderPage(1, {
@@ -68,13 +77,13 @@ describe('UI::page', function () {
       scale: 1,
       rotate: 0
     }).then(function ([pdfPage, annotations]) {
-      equal(page.getAttribute('data-loaded'), 'true');
-      equal(page.style.visibility, '');
+      expect(page.getAttribute('data-loaded')).toBe('true');
+      expect(page.style.visibility).toBe('');
 
-      equal(typeof pdfPage.render, 'function');
-      equal(Array.isArray(annotations.annotations), true);
+      expect(typeof pdfPage.render).toBe('function');
+      expect(Array.isArray(annotations.annotations)).toBe(true);
 
-      done();
+      
     });
   });
 });

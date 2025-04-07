@@ -1,6 +1,24 @@
-import twitter from 'twitter-text';
 import PDFJSAnnotate from '../';
 import initColorPicker from './shared/initColorPicker';
+
+// Simple text utilities to replace twitter-text dependency
+const textUtils = {
+  htmlEscape: function(text) {
+    return text
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  },
+  
+  autoLink: function(text) {
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    return text.replace(urlRegex, url => {
+      return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+    });
+  }
+};
 
 const { UI } = PDFJSAnnotate;
 const documentId = 'example.pdf';
@@ -308,7 +326,7 @@ render();
   function insertComment(comment) {
     let child = document.createElement('div');
     child.className = 'comment-list-item';
-    child.innerHTML = twitter.autoLink(twitter.htmlEscape(comment.content));
+    child.innerHTML = textUtils.autoLink(textUtils.htmlEscape(comment.content));
 
     commentList.appendChild(child);
   }
