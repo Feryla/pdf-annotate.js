@@ -4,7 +4,7 @@
   <meta charset="utf-8"/>
   <title>PDFJSAnnotate</title>
   <link rel="stylesheet" type="text/css" href="shared/toolbar.css"/>
-  <link rel="stylesheet" type="text/css" href="shared/pdf_viewer.css"/>
+  <link rel="stylesheet" type="text/css" href="/pdfjs/pdf_viewer.css"/>
   <style type="text/css">
     body {
       background-color: #eee;
@@ -142,8 +142,16 @@
       </form>
     </div>
   </div>
-  <script src="shared/pdf.js"></script>
-  <script src="shared/pdf_viewer.js"></script>
+  <script src="/pdfjs/pdf.js"></script>
+  <script src="/pdfjs/pdf_viewer.js"></script>
   <script src="index.js"></script>
+  <script>
+    // Try to initialize PDF.js after a short delay
+    setTimeout(() => {
+      if (window.initPDFAnnotate) {
+        window.initPDFAnnotate();
+      }
+    }, 500);
+  </script>
 </body>
 </html>

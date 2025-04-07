@@ -31,7 +31,25 @@ let RENDER_OPTIONS = {
 };
 
 PDFJSAnnotate.setStoreAdapter(new PDFJSAnnotate.LocalStoreAdapter());
-PDFJS.workerSrc = './shared/pdf.worker.js';
+
+// Initialize PDF.js global variables properly
+document.addEventListener('pdfjsloaded', () => {
+  window.PDFJS = window.pdfjsLib;
+  // Set worker path
+  PDFJS.workerSrc = '/pdfjs/pdf.worker.js';
+  
+  // Start rendering after PDF.js is loaded
+  render();
+});
+
+// Don't attempt to render until PDF.js is loaded
+window.initPDFAnnotate = function() {
+  if (typeof window.pdfjsLib !== 'undefined') {
+    window.PDFJS = window.pdfjsLib;
+    PDFJS.workerSrc = '/pdfjs/pdf.worker.js';
+    render();
+  }
+};
 
 // Render stuff
 let NUM_PAGES = 0;
@@ -46,6 +64,13 @@ document.getElementById('content-wrapper').addEventListener('scroll', function (
 });
 
 function render() {
+  // Make sure PDFJS is defined before trying to use it
+  if (typeof window.PDFJS === 'undefined') {
+    console.log('PDF.js not loaded yet, waiting...');
+    setTimeout(render, 100);
+    return;
+  }
+  
   PDFJS.getDocument(RENDER_OPTIONS.documentId).then((pdf) => {
     RENDER_OPTIONS.pdfDocument = pdf;
 
@@ -61,9 +86,11 @@ function render() {
       let viewport = pdfPage.getViewport(RENDER_OPTIONS.scale, RENDER_OPTIONS.rotate);
       PAGE_HEIGHT = viewport.height;
     });
+  }).catch(error => {
+    console.error('Error loading PDF:', error);
   });
 }
-render();
+// render() is now called after PDF.js is loaded
 
 // Text stuff
 (function () {

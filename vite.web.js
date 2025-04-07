@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
+import pdfjsDevPlugin from './scripts/pdfjs-dev-plugin';
 
 export default defineConfig({
   root: 'docs',
@@ -15,5 +16,11 @@ export default defineConfig({
       }
     }
   },
-  plugins: []
+  plugins: [pdfjsDevPlugin()],
+  // Make sure Vite can find node_modules files
+  resolve: {
+    alias: {
+      'pdfjs-dist': resolve(__dirname, 'node_modules/pdfjs-dist')
+    }
+  }
 });

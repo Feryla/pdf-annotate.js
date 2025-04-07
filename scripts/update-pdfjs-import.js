@@ -17,10 +17,10 @@ const updateFiles = () => {
     console.log(`Updating ${file}`);
     let content = readFileSync(file, 'utf8');
     
-    // Replace script src references
+    // Replace script src references with public paths for development
     content = content.replace(
       /<script src=".*\/pdf\.js"><\/script>/g, 
-      '<script src="../../node_modules/pdfjs-dist/build/pdf.js"></script>'
+      '<script src="/pdfjs/pdf.js"></script>'
     );
     
     content = content.replace(
@@ -30,13 +30,13 @@ const updateFiles = () => {
 
     content = content.replace(
       /<script src=".*\/pdf_viewer\.js"><\/script>/g, 
-      '<script src="../../node_modules/pdfjs-dist/web/pdf_viewer.js"></script>'
+      '<script src="/pdfjs/pdf_viewer.js"></script>'
     );
     
     // Replace CSS references
     content = content.replace(
       /<link rel="stylesheet" type="text\/css" href=".*\/pdf_viewer\.css"\/>/g, 
-      '<link rel="stylesheet" type="text/css" href="../../node_modules/pdfjs-dist/web/pdf_viewer.css"/>'
+      '<link rel="stylesheet" type="text/css" href="/pdfjs/pdf_viewer.css"/>'
     );
     
     writeFileSync(file, content, 'utf8');
@@ -58,7 +58,7 @@ const updateFiles = () => {
       console.log(`Updating ${file}`);
       content = content.replace(
         /PDFJS\.workerSrc = '.*\/pdf\.worker\.js';/g, 
-        "PDFJS.workerSrc = '../../node_modules/pdfjs-dist/build/pdf.worker.js';"
+        "PDFJS.workerSrc = '/pdfjs/pdf.worker.js';"
       );
       
       writeFileSync(file, content, 'utf8');

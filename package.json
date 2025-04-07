@@ -9,9 +9,10 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "copy-shared": "node scripts/cp-shared.js",
+    "copy-pdfjs": "node scripts/copy-pdfjs-assets.js",
     "update-pdfjs": "node scripts/update-pdfjs-import.js",
-    "dev": "npm run copy-shared && npm run update-pdfjs && vite --config vite.web.js",
-    "dev:sandbox": "npm run copy-shared && npm run update-pdfjs && vite --config vite.sandbox.js",
+    "dev": "npm run copy-shared && npm run copy-pdfjs && npm run update-pdfjs && vite --config vite.web.js",
+    "dev:sandbox": "npm run copy-shared && npm run copy-pdfjs && npm run update-pdfjs && vite --config vite.sandbox.js",
     "build": "vite build && MINIFY=1 vite build",
     "preview": "vite preview"
   },
