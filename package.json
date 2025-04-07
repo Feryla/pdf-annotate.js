@@ -9,8 +9,9 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "copy-shared": "node scripts/cp-shared.js",
-    "dev": "npm run copy-shared && vite --config vite.web.js",
-    "dev:sandbox": "npm run copy-shared && vite --config vite.sandbox.js",
+    "update-pdfjs": "node scripts/update-pdfjs-import.js",
+    "dev": "npm run copy-shared && npm run update-pdfjs && vite --config vite.web.js",
+    "dev:sandbox": "npm run copy-shared && npm run update-pdfjs && vite --config vite.sandbox.js",
     "build": "vite build && MINIFY=1 vite build",
     "preview": "vite preview"
   },
@@ -31,9 +32,13 @@
     "url": "https://github.com/Feryla/pdf-annotate.js/issues"
   },
   "homepage": "https://github.com/Feryla/pdf-annotate.js#readme",
+  "peerDependencies": {
+    "pdfjs-dist": "^5.x"
+  },
   "devDependencies": {
     "@vitest/coverage-v8": "^3.1.1",
     "canvas": "^3.1.0",
+    "glob": "^10.3.12",
     "jsdom": "^26.0.0",
     "pdfjs-dist": "^5.1.91",
     "vite": "^6.2.5",

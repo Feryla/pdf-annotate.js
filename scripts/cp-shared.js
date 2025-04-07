@@ -15,10 +15,6 @@ const copySharedFiles = () => {
   // List of files to copy from shared folder
   const sharedFiles = [
     'initColorPicker.js',
-    'pdf.js',
-    'pdf.worker.js',
-    'pdf_viewer.css',
-    'pdf_viewer.js',
     'toolbar.css'
   ];
 
