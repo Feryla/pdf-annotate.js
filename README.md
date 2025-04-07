@@ -1,6 +1,7 @@
 # pdf-annotate.js
 
 [![build status](https://github.com/Feryla/pdf-annotate.js/actions/workflows/build.yml/badge.svg)](https://github.com/Feryla/pdf-annotate.js/actions)
+[![codecov](https://codecov.io/github/Feryla/pdf-annotate.js/graph/badge.svg?token=472KTSAOU6)](https://codecov.io/github/Feryla/pdf-annotate.js)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Feryla/pdf-annotate.js/blob/master/LICENSE)
 
 Annotation layer for [pdf.js](https://github.com/mozilla/pdf.js)
